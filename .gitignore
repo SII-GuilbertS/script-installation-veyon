@@ -1,0 +1,10 @@
+# Cle privee Veyon : donne le controle de tous les postes eleves, ne jamais publier
+config/cles_profs/keys/private/
+
+# Fichiers generes a l'installation
+logs/
+postes.csv
+postes.tmp
+
+# Fichiers systeme macOS
+.DS_Store

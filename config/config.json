@@ -1,0 +1,7 @@
+{
+    "Authentication": {
+        "Method": "1",
+        "PrivateKeyBaseDir": "%GLOBALAPPDATA%\\keys\\private",
+        "PublicKeyBaseDir": "%GLOBALAPPDATA%\\keys\\public"
+    }
+}

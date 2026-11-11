@@ -1,0 +1,5 @@
+# Les scripts Windows doivent garder des fins de ligne CRLF
+*.bat text eol=crlf
+*.exe binary
+# Cles Veyon : garder les octets exacts
+config/**/key -text
