@@ -18,7 +18,7 @@ Une documentation complète, prête à imprimer, se trouve dans [`Documentation_
 |---|---|
 | `install_veyon_eleves.bat` | Installe Veyon **sans** la console Master et copie la **clé publique**. Nomme le poste dans Veyon. |
 | `install_veyon_profs.bat` | Installe Veyon **avec** la console Master et copie la **clé privée**. |
-| `importer_postes_veyon.bat` | À lancer sur le poste prof : importe la liste des postes (`postes.csv`) dans Veyon. |
+| `importer_postes_veyon.bat` | À lancer sur le poste prof : importe d'un coup dans Veyon tous les `postes*.csv` du dossier et de ses sous-dossiers. |
 | `veyon-setup.exe` | Programme d'installation de Veyon (64 bits). |
 | `config/config.json` | Configuration appliquée à l'installation : authentification par clés. |
 | `config/cles_eleves/` | Clé **publique**, pour les postes élèves. |
@@ -90,7 +90,7 @@ Fonctionnement de la numérotation :
 
 - Le script reprend la salle de la dernière ligne de `postes.csv` et prend le numéro suivant le plus grand déjà utilisé.
 - Si vous réinstallez un poste déjà présent dans le CSV, il garde son nom.
-- **Pour changer de salle**, utilisez un dossier séparé (avec son propre `postes.csv`) ou renommez `postes.csv` avant de passer à la salle suivante.
+- **Pour changer de salle**, utilisez un dossier séparé avec son propre `postes.csv`, ou renommez `postes.csv` (par exemple `postes_S12.csv`) avant de passer à la salle suivante. Le script d'import retrouvera tous ces fichiers.
 
 ### 2. Postes profs : `install_veyon_profs.bat`
 
@@ -100,12 +100,25 @@ Fonctionnement de la numérotation :
 
 ### 3. Liste des postes sur le poste prof : `importer_postes_veyon.bat`
 
-1. Une fois les postes élèves installés, branchez la clé USB, avec son `postes.csv`, sur le poste prof.
+1. Une fois les postes élèves installés, branchez la clé USB sur le poste prof.
 2. Lancez `importer_postes_veyon.bat` en administrateur.
-3. Vérifiez la liste affichée, puis confirmez avec `O`.
-4. Ouvrez **Veyon Master** et cochez la salle : les postes apparaissent avec leur nom (`S12-PC01`…).
+3. Le script cherche **tous les fichiers `postes*.csv`** du dossier et de ses sous-dossiers, et les rassemble. Il affiche le nombre de postes par fichier, puis les salles concernées.
+4. Choisissez :
+   - **`A` – Ajouter / mettre à jour** : seules les salles présentes dans les CSV sont remplacées. Les autres salles déjà dans Veyon sont conservées. C'est le choix habituel.
+   - **`R` – Remplacer tout** : la liste actuelle de Veyon est entièrement effacée, puis remplacée par les CSV.
+   - **`Q` – Quitter** sans rien changer.
+5. Ouvrez **Veyon Master** et cochez la salle : les postes apparaissent avec leur nom (`S12-PC01`…).
 
-> ⚠️ L'import **remplace** la liste des salles et des postes qui existe déjà sur ce poste prof. S'il y a plusieurs postes profs, lancez l'import sur chacun d'eux.
+Exemple d'organisation de la clé USB, avec une salle par dossier :
+
+```
+CLE_USB\
+├─ importer_postes_veyon.bat
+├─ S12\  (scripts + postes.csv de la salle 12)
+└─ S14\  (scripts + postes.csv de la salle 14)
+```
+
+> Un même poste (même nom Windows) présent dans plusieurs CSV n'est importé qu'une fois : c'est la première ligne trouvée qui compte. S'il y a plusieurs postes profs, lancez l'import sur chacun d'eux.
 
 ---
 
